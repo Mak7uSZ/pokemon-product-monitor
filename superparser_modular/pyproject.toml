@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pokemon-parser"
+version = "2.0.0"
+description = "Modular multi-site monitor for pokemon products"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "aiohttp>=3.9",
+  "requests>=2.31",
+  "beautifulsoup4>=4.12",
+  "python-dotenv>=1.0",
+  "fastapi>=0.115",
+  "selenium>=4.23",
+  "uvicorn[standard]>=0.30",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

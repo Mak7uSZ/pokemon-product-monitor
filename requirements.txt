@@ -1,0 +1,3 @@
+# Compatibility entry point for existing installers. Runtime dependency
+# versions and hashes are generated from superparser_modular/pyproject.toml.
+-r requirements.lock

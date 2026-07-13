@@ -1,0 +1,50 @@
+# Version-control and editor state
+.git
+.github
+.idea
+.vscode
+
+# Credentials and local configuration
+**/.env
+**/.env.*
+!**/.env.example
+**/config.json
+**/scan_settings.json
+**/filters.json
+
+# Runtime state and diagnostics
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3
+**/*.bak
+**/*.backup
+**/*.log
+**/*.har
+**/*.dmp
+**/*.startup-migration.lock
+**/backups
+**/browser-profile
+**/chrome-profile
+**/debug_artifacts
+**/debug_logs
+**/diagnostics
+**/log_extracts
+**/settings_snapshots
+
+# Dependencies, caches, and local environments
+**/__pycache__
+**/.pytest_cache
+**/.venv
+**/htmlcov
+**/node_modules
+**/.vite
+audit_compare
+
+# Archives are release outputs, never Docker build inputs
+**/*.7z
+**/*.gz
+**/*.rar
+**/*.tar
+**/*.tgz
+**/*.zip

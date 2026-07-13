@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Synthetic Trading Card Starter Pack",
+    "sites": ["bol"],
+    "keyword_groups": [["synthetic", "trading", "card", "starter", "pack"]],
+    "exclude_words": [],
+    "min_price": 10,
+    "max_price": 20,
+    "enabled": false
+  }
+]

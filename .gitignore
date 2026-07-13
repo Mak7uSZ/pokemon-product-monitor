@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+config.json
+/superparser_modular/scan_settings.json
+/superparser_modular/filters.json
+/superparser_modular/filters copy.json
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Frontend dependencies and caches
+/frontend/node_modules/
+/frontend/.vite/
+
+# Runtime logs and diagnostics
+*.log
+/logs/
+/superparser_modular/debug_logs/
+/superparser_modular/debug_artifacts/
+/superparser_modular/log_extracts/
+/superparser_modular/log_extracts.zip
+/superparser_modular/errors_tail.txt
+/superparser_modular/mediamarkt_0325_extract.txt
+/superparser_modular/scan_decision_*.txt
+
+# Databases, backups, and local snapshots
+/superparser_modular/*.db
+/superparser_modular/*.db-shm
+/superparser_modular/*.db-wal
+/superparser_modular/*.startup-migration.lock
+/superparser_modular/*.bak
+/superparser_modular/backups/
+/superparser_modular/settings_snapshots/
+
+# Browser profiles and historical comparison worktrees
+/chrome-profile/
+/pokemon_parser/
+/audit_compare/
