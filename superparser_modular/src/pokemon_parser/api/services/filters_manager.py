@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from pokemon_parser.api.services.shared import storage_context
@@ -7,6 +8,8 @@ from pokemon_parser.config import parse_bool
 from pokemon_parser.filters.legacy import load_filters_from_json
 from pokemon_parser.filters.models import FilterRule
 from pokemon_parser.utils.text import normalize_text
+
+logger = logging.getLogger(__name__)
 
 
 class FiltersManager:
@@ -70,7 +73,7 @@ class FiltersManager:
         path = cfg.filters_json_path
         metadata = {
             "exists": path.exists(),
-            "path": str(path),
+            "path": path.name,
             "count": 0,
             "error": "",
         }
@@ -79,8 +82,9 @@ class FiltersManager:
 
         try:
             metadata["count"] = len(load_filters_from_json(path))
-        except Exception as exc:
-            metadata["error"] = f"{type(exc).__name__}: {exc}"
+        except Exception:
+            logger.warning("Unable to read legacy filters metadata", exc_info=True)
+            metadata["error"] = "Legacy filters.json could not be read."
         return metadata
 
     def _import_legacy_filters(self, *, storage, cfg) -> dict[str, Any]:
@@ -97,7 +101,7 @@ class FiltersManager:
         if metadata["error"]:
             return {
                 "ok": False,
-                "message": f"Legacy filters.json could not be read: {metadata['error']}",
+                "message": metadata["error"],
                 "imported_count": 0,
                 "skipped_count": 0,
                 "total_count": 0,

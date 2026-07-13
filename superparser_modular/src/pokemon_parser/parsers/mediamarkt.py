@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 import aiohttp
+from bs4 import BeautifulSoup
 
 from pokemon_parser.config import AppConfig
 from pokemon_parser.engine.access_control import (
@@ -2011,13 +2012,11 @@ class MediaMarktParser(BaseParser):
         return index
 
     def _html_to_text(self, blob: str) -> str:
-        blob = html_lib.unescape(blob)
-        blob = re.sub(r"<script\b[^>]*>.*?</script>", " ", blob, flags=re.IGNORECASE | re.DOTALL)
-        blob = re.sub(r"<style\b[^>]*>.*?</style>", " ", blob, flags=re.IGNORECASE | re.DOTALL)
-        blob = re.sub(r"<[^>]+>", " ", blob)
-        blob = blob.replace("\xa0", " ")
-        blob = re.sub(r"\s+", " ", blob).strip()
-        return blob
+        soup = BeautifulSoup(html_lib.unescape(blob), "html.parser")
+        for hidden in soup(["script", "style"]):
+            hidden.decompose()
+        text = soup.get_text(" ").replace("\xa0", " ")
+        return re.sub(r"\s+", " ", text).strip()
 
     def _choose_best_price(self, text: str) -> float | None:
         candidates = self._parse_price_candidates_from_text(text)
