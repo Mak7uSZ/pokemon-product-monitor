@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import time
+from urllib.parse import urlsplit
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -56,8 +57,17 @@ class BolWorkerCase(BaseWorkerCase):
 
     @staticmethod
     def _is_login_page(driver) -> bool:
-        url = driver.current_url.lower()
-        return "login.bol.com" in url or "/wsp/login" in url
+        try:
+            parsed = urlsplit(str(driver.current_url or "").strip())
+        except (AttributeError, ValueError):
+            return False
+        hostname = (parsed.hostname or "").rstrip(".").lower()
+        path = parsed.path.rstrip("/").lower()
+        if parsed.scheme.lower() != "https":
+            return False
+        if hostname == "login.bol.com":
+            return True
+        return hostname in {"bol.com", "www.bol.com"} and path.startswith("/wsp/login")
 
     @staticmethod
     def _click_login_submit_if_needed(

@@ -75,8 +75,8 @@ class WatchlistManager:
                 return {"ok": False, "message": "site, product_key/sku, and url are required"}
             try:
                 url = validate_retailer_url(site, url)
-            except ValueError as exc:
-                return {"ok": False, "message": str(exc)}
+            except ValueError:
+                return {"ok": False, "message": "The retailer URL is invalid for the selected site."}
             item = storage.upsert_watchlist_entry(
                 WatchlistProduct(
                     site=site,

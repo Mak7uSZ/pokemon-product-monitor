@@ -5,6 +5,7 @@ import time
 import logging
 from pathlib import Path
 from typing import Callable
+from urllib.parse import urlsplit
 
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
@@ -1423,11 +1424,12 @@ class MediaMarktWorkerCase(BaseWorkerCase):
     @staticmethod
     def _is_external_payment_page(driver: WebDriver) -> bool:
         try:
-            url = driver.current_url.lower()
-        except Exception:
+            parsed = urlsplit(str(driver.current_url or "").strip())
+        except (AttributeError, ValueError):
             return False
-
-        return "computop-paygate.com" in url or "payssl.aspx" in url
+        hostname = (parsed.hostname or "").rstrip(".").lower()
+        is_computop = hostname == "computop-paygate.com" or hostname.endswith(".computop-paygate.com")
+        return parsed.scheme.lower() == "https" and is_computop
 
     @staticmethod
     def _fast_fill(driver: WebDriver, css_selector: str, value: str) -> bool:

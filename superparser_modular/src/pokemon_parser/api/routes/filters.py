@@ -18,7 +18,7 @@ def get_filter(filter_id: int):
     try:
         return get_filters_manager().get_filter(filter_id)
     except KeyError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+        raise HTTPException(status_code=404, detail="filter not found") from exc
 
 
 @router.post("")
@@ -31,7 +31,7 @@ def update_filter(filter_id: int, payload: FilterPayload):
     try:
         return get_filters_manager().update_filter(filter_id, payload.model_dump())
     except KeyError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+        raise HTTPException(status_code=404, detail="filter not found") from exc
 
 
 @router.delete("/{filter_id}")
@@ -44,7 +44,7 @@ def toggle_filter(filter_id: int):
     try:
         return get_filters_manager().toggle_filter(filter_id)
     except KeyError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+        raise HTTPException(status_code=404, detail="filter not found") from exc
 
 
 @router.post("/import-json")
